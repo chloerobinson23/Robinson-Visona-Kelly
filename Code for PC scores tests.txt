@@ -1,0 +1,96 @@
+# All whales and PC scores
+# Final scripts used in paper
+# [October 5, 2024]
+
+
+#######################
+## All whales
+#######################
+
+nrkw <- read.csv(("PC_scores_28Mar24.csv"), stringsAsFactors =TRUE, na.strings = c(""))
+attach(nrkw)
+str(nrkw)
+
+library(tidyr)
+library(dplyr)
+library(ggpubr)
+library(plyr)
+library(lme4)
+library(broom)
+library(lme4)
+
+shapiro.test(nrkw$PC1)
+#NOT NORMAL
+
+shapiro.test(nrkw$PC2)
+#NOT NORMAL
+
+
+#PC1 and status
+model1<-aov(PC1~status,data=nrkw)
+summary(model1)
+
+              #Df  Sum Sq  Mean Sq F value Pr(>F)  
+#status       5 0.007599 0.0015198   3.827 0.00662 **
+#Residuals   38 0.015091 0.0003971                    
+#---
+  #Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+#PC2 and status
+
+model2<-aov(PC2~status,data=nrkw)
+summary(model2)
+
+              #Df   Sum Sq   Mean Sq F value Pr(>F)
+#status       5 0.006793 0.001359   16.17 1.55E-08 ***
+#Residuals   38 0.003192 0.000084                    
+#---
+  #Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+### Post-hoc tests
+
+ph1<-TukeyHSD(model1, conf.level=.95)
+ph1
+
+ 
+                                          #diff         lwr          upr     p adj
+#Late-pregnant-Early-pregnant           0.010226326 -0.02638370  0.046836350 0.9583769
+#Not-pregnant-Early-pregnant            0.021406674 -0.01310959  0.055922936 0.4411141
+#Nursing (1st year)-Early-pregnant     -0.014118153 -0.04948680  0.021250491 0.8352777
+#Nursing (2nd year)-Early-pregnant     -0.002026069 -0.04061642  0.036564286 0.9999853
+#Nursing (3rd year)-Early-pregnant     -0.000731501 -0.04300512  0.041542114 0.9999999
+#Not-pregnant-Late-pregnant             0.011180348 -0.01610715  0.038467850 0.8198857
+#Nursing (1st year)-Late-pregnant      -0.024344479 -0.05270248  0.004013524 0.1284504
+#Nursing (2nd year)-Late-pregnant      -0.012252394 -0.04453940  0.020034613 0.8621600
+#Nursing (3rd year)-Late-pregnant      -0.010957827 -0.04756785  0.025652198 0.9446378
+#Nursing (1st year)-Not-pregnant       -0.035524827 -0.06112277 -0.009926882 0.0022357
+#Nursing (2nd year)-Not-pregnant       -0.023432743 -0.05332470  0.006459217 0.1992767
+#Nursing (3rd year)-Not-pregnant       -0.022138175 -0.05665444  0.012378087 0.4037843
+#Nursing (2nd year)-Nursing (1st year)  0.012092085 -0.01878020  0.042964368 0.8457939
+#Nursing (3rd year)-Nursing (1st year)  0.013386652 -0.02198199  0.048755296 0.8634520
+#Nursing (3rd year)-Nursing (2nd year)  0.001294568 -0.03729579  0.039884922 0.9999984
+
+
+ph2<-TukeyHSD(model2, conf.level=.95)
+ph2
+
+                                          #diff          lwr          upr     p adj
+#Late-pregnant-Early-pregnant          -0.032688519 -0.049526515 -0.015850523 0.0000141
+#Not-pregnant-Early-pregnant            0.001693212 -0.014181803  0.017568227 0.9995154
+#Nursing (1st year)-Early-pregnant     -0.005259388 -0.021526437  0.011007662 0.9246016
+#Nursing (2nd year)-Early-pregnant     -0.009938515 -0.027687321  0.007810291 0.5529656
+#Nursing (3rd year)-Early-pregnant      0.002460129 -0.016982714  0.021902972 0.9988904
+#Not-pregnant-Late-pregnant             0.034381731  0.021831430  0.046932033 0.0000000
+#Nursing (1st year)-Late-pregnant       0.027429131  0.014386476  0.040471787 0.0000031
+#Nursing (2nd year)-Late-pregnant       0.022750004  0.007900288  0.037599721 0.0006222
+#Nursing (3rd year)-Late-pregnant       0.035148648  0.018310653  0.051986644 0.0000036
+#Nursing (1st year)-Not-pregnant       -0.006952600 -0.018725826  0.004820626 0.4953591
+#Nursing (2nd year)-Not-pregnant       -0.011631727 -0.025379893  0.002116439 0.1386099
+#Nursing (3rd year)-Not-pregnant        0.000766917 -0.015108098  0.016641932 0.9999903
+#Nursing (2nd year)-Nursing (1st year) -0.004679127 -0.018878172  0.009519918 0.9187593
+#Nursing (3rd year)-Nursing (1st year)  0.007719517 -0.008547532  0.023986567 0.7127639
+#Nursing (3rd year)-Nursing (2nd year)  0.012398644 -0.005350162  0.030147451 0.3111214
+
+### END ###
