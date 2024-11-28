@@ -1,6 +1,6 @@
 # All whales CVA plots
 # Final scripts used in paper
-# [October 05, 2024]
+# [November 28, 2024]
 
 
 #######################
@@ -21,7 +21,7 @@ cva<- read.csv(("CVA_6LM 2 photos.csv"), stringsAsFactors =TRUE, na.strings = c(
 attach(cva)
 str(cva)
 
-# Plot1 - color by pregnancy status
+# Plot1 - color by reproductive status
 
 chulls.preg <- ddply(cva, .(status), function(cva) cva[chull(cva$CV1, cva$CV2), ])
 
@@ -31,7 +31,7 @@ p1 <- ggplot(data=cva, aes(x=CV1, y=CV2)) +
   theme_bw() +
   xlab("CV1 (66.4%)")+
   ylab("CV2 (30.9%)")+
-  labs(color="Pregnancy Status")+
+  labs(color="Reproductive Status")+
   scale_color_viridis_d(option = "viridis")+
   scale_fill_viridis_d(option = "viridis")+
   theme(
@@ -52,43 +52,7 @@ p1 <- ggplot(data=cva, aes(x=CV1, y=CV2)) +
 
 p1
 
-ggsave("CVA_preg status.tiff", units = "in", width = 10, height = 7, dpi = 300, p1)
-
-
-
-# Plot2 - color by matriline
-
-# color by matriline
-chulls.mat <- ddply(cva, .(matriline), function(cva) cva[chull(cva$CV1, cva$CV2), ])
-
-p2 <- ggplot(data=cva, aes(x=CV1, y=CV2)) + 
-  geom_polygon(data=chulls.mat, aes(x=CV1, y=CV2, fill=matriline), alpha=0.5, show.legend = FALSE) +
-  geom_point(data=cva, aes(color=matriline), size=4) +
-  theme_bw() +
-  xlab("CV1 (87.9%)")+
-  ylab("CV2 (12.1%)")+
-  labs(color="Matriline")+
-  scale_color_viridis_d(option="inferno")+
-  scale_fill_viridis_d(option="inferno")+
-  theme(
-    plot.title = element_text(size=10),
-    axis.text.x = element_text(hjust=1),
-    panel.grid.major = element_blank(), 
-    panel.grid.minor = element_blank(),
-    panel.background = element_blank(), 
-    axis.line = element_line(colour = "black"),
-    legend.key=element_blank(),
-    axis.title = element_text(size=12),
-    axis.text = element_text(size=12),
-    axis.title.x = element_text(size = 14, face = "bold"),
-    axis.title.y = element_text(size = 14, face = "bold"),
-    legend.title = element_text(size=12, face = "bold"),
-    legend.text = element_text(size=12))
-
-
-p2
-
-ggsave("CVA_Matriline.tiff", units = "in", width = 10, height = 7, dpi = 300, p2)
+ggsave("Figure S3.tiff", units = "in", width = 10, height = 7, dpi = 300, p1)
 
 
 
@@ -98,17 +62,17 @@ cva2<- read.csv(("CVA_scores_28Mar24.csv"), stringsAsFactors =TRUE, na.strings =
 attach(cva2)
 str(cva2)
 
-# Plot1 - color by pregnancy status
+# Plot2 - color by reproductive status
 
 chulls.preg <- ddply(cva2, .(status), function(cva2) cva2[chull(cva2$CV1, cva2$CV2), ])
 
-p3 <- ggplot(data=cva2, aes(x=CV1, y=CV2)) + 
+p2 <- ggplot(data=cva2, aes(x=CV1, y=CV2)) + 
   geom_polygon(data=chulls.preg, aes(x=CV1, y=CV2, fill=status), alpha=0.5, show.legend = FALSE) +
   geom_point(data=cva2, aes(color=status), size=4) +
   theme_bw() +
   xlab("CV1 (66.4%)")+
   ylab("CV2 (23.4%)")+
-  labs(color="Pregnancy Status")+
+  labs(color="Reproductive Status")+
   scale_color_viridis_d(option = "viridis")+
   scale_fill_viridis_d(option = "viridis")+
   theme(
@@ -127,8 +91,8 @@ p3 <- ggplot(data=cva2, aes(x=CV1, y=CV2)) +
     legend.text = element_text(size=12))
 
 
-p3
+p2
 
-ggsave("CVA_pop preg status.tiff", units = "in", width = 10, height = 7, dpi = 300, p3)
+ggsave("Figure3.tiff", units = "in", width = 10, height = 7, dpi = 300, p2)
 
 ### END ###
