@@ -1,12 +1,12 @@
 # Candidate whales tests
 # Final scripts used in paper
-# [October 5, 2024]
+# [January 4, 2025]
 
 #######################
 ## Candidate whales
 #######################
 
-candidate <- read.csv(("candidate_distance_Oct24.csv"), stringsAsFactors =TRUE, na.strings = c(""))
+candidate <- read.csv(("candidate_distance_Jan25.csv"), stringsAsFactors =TRUE, na.strings = c(""))
 attach(candidate)
 str(candidate)
 
@@ -14,23 +14,23 @@ model36<-aov(PD~as.factor(LM)+as.factor(Photos),data=candidate)
 summary(model36)
 
 #Df    Sum Sq   Mean Sq F value  Pr(>F)   
-#as.factor(LM)       2 0.00112 0.0005602   4.896 0.00891 **
-#as.factor(Photos)   2 0.00118 0.0005898   5.155 0.00701 **
-#Residuals         130 0.01487 0.0001144    
+#as.factor(LM)       2 0.00001 0.0000069   0.009 0.991
+#as.factor(Photos)   2 0.00152 0.0007617   0.997 0.372
+#Residuals         130 0.09934 0.0001144    
 
 ph22<-TukeyHSD(model36, conf.level=.95)
 ph22
 
-
-#              diff          lwr           upr     p adj
-#6-4  -0.001688889 -0.007035219  0.0036574413 0.7348026
-#10-4 -0.006777778 -0.012124108 -0.0014314476 0.0088716
-#10-6 -0.005088889 -0.010435219  0.0002574413 0.0657173
+          #diff         lwr        upr     p adj
+#6-4  -0.0007777778 -0.01459462 0.01303907 0.9902291
+#10-4 -0.0003333333 -0.01415018 0.01348351 0.9981980
+#10-6  0.0004444444 -0.01337240 0.01426129 0.9967987
 
 #$`as.factor(Photos)`
-            #diff          lwr           upr     p adj
-#2-1 -0.005511111 -0.010857441 -0.0001647809 0.0417151
-#3-1 -0.006822222 -0.012168552 -0.0014758920 0.0083622
-#3-2 -0.001311111 -0.006657441  0.0040352191 0.8302938
+          #diff          lwr         upr     p adj
+#2-1 -0.0075555556 -0.021372402 0.006261291 0.3997268
+#3-1 -0.0009555556 -0.014772402 0.012861291 0.9852895
+#3-2  0.0066000000 -0.007216846 0.020416846 0.4958768
 
 ### END ###
+
