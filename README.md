@@ -6,6 +6,7 @@ Landmarks (.tps file) for the candidate whales used in the study
 Landmarks (.tps file) for all whales used in the study
 
 Exported data:
+
 Procrustes distances for candidate whales - candidate_distance_Jan25.csv
 
 Canonical Variate Analysis (CVA) scores for candidate whales - CVA scores_candidate whales_2025.csv
